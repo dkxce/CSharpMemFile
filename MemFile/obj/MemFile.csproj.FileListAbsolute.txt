@@ -1,0 +1,15 @@
+C:\Downloads\CD-REC\TEST\MemFile\MemFile\obj\Debug\ResolveAssemblyReference.cache
+C:\Downloads\CD-REC\TEST\MemFile\MemFile\bin\Debug\MemFile.exe
+C:\Downloads\CD-REC\TEST\MemFile\MemFile\bin\Debug\MemFile.pdb
+C:\Downloads\CD-REC\TEST\MemFile\MemFile\obj\Debug\MemFile.exe
+C:\Downloads\CD-REC\TEST\MemFile\MemFile\obj\Debug\MemFile.pdb
+C:\Downloads\CD-REC\TEST\MemFile - Копия\MemFile\obj\Debug\MemFile.exe
+C:\Downloads\CD-REC\TEST\MemFile - Копия\MemFile\obj\Debug\MemFile.pdb
+C:\Downloads\CD-REC\TEST\MemFile - Копия\MemFile\bin\Debug\MemFile.exe
+C:\Downloads\CD-REC\TEST\MemFile - Копия\MemFile\bin\Debug\MemFile.pdb
+C:\Downloads\CD-REC\TEST\MemFile - Копия\MemFile\obj\Debug\ResolveAssemblyReference.cache
+C:\Downloads\CD-REC\TEST\MemFile2\MemFile\obj\Debug\MemFile.exe
+C:\Downloads\CD-REC\TEST\MemFile2\MemFile\obj\Debug\MemFile.pdb
+C:\Downloads\CD-REC\TEST\MemFile2\MemFile\bin\Debug\MemFile.exe
+C:\Downloads\CD-REC\TEST\MemFile2\MemFile\bin\Debug\MemFile.pdb
+C:\Downloads\CD-REC\TEST\MemFile2\MemFile\obj\Debug\ResolveAssemblyReference.cache
