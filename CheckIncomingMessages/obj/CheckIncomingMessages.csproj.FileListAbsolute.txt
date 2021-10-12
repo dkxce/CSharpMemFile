@@ -1,0 +1,10 @@
+C:\Downloads\CD-REC\MemFile2\CheckIncomingMessages\obj\Debug\ResolveAssemblyReference.cache
+C:\Downloads\CD-REC\MemFile2\CheckIncomingMessages\obj\Debug\CheckIncomingMessages.Properties.Resources.resources
+C:\Downloads\CD-REC\MemFile2\CheckIncomingMessages\obj\Debug\CheckIncomingMessages.csproj.GenerateResource.Cache
+C:\Downloads\CD-REC\MemFile2\CheckIncomingMessages\bin\Debug\CheckIncomingMessages.exe
+C:\Downloads\CD-REC\MemFile2\CheckIncomingMessages\bin\Debug\CheckIncomingMessages.pdb
+C:\Downloads\CD-REC\MemFile2\CheckIncomingMessages\obj\Debug\CheckIncomingMessages.exe
+C:\Downloads\CD-REC\MemFile2\CheckIncomingMessages\obj\Debug\CheckIncomingMessages.pdb
+C:\Downloads\CD-REC\MemFile2\CheckIncomingMessages\obj\Debug\CheckIncomingMessages.Form1.resources
+C:\Downloads\CD-REC\MemFile2\CheckIncomingMessages\bin\Debug\MemFile.exe
+C:\Downloads\CD-REC\MemFile2\CheckIncomingMessages\bin\Debug\MemFile.pdb

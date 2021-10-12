@@ -15,43 +15,50 @@ using System.Runtime.ConstrainedExecution;
 
 namespace MemFile
 {
-    class Program
+    public class Program
     {
-        private static string fileName = "SampleMemFile.bin";
+        public const string fileName = "SampleMemFile.bin";
 
         // TEST
-        static void Main(string[] args)
+        static unsafe void Main(string[] args)
         {
             byte mode = 0;
             if ((args != null) && (args.Length != 0) && (args[0] == "/set")) mode = 1;
             if ((args != null) && (args.Length != 0) && (args[0] == "/get")) mode = 2;
 
-
-            MemoryFile.CONSOLE_OUT = true;
             IntPtr procHandle = Process.GetCurrentProcess().Handle;
-            Console.WriteLine("This app handle: {0}", procHandle);
-            MemoryFile fms = new MemoryFile(fileName, procHandle);
-
+            MemoryFile fms = new MemoryFile(fileName);
+            fms.ProcessNotifySources = MemoryFile.NotifySource.nsThread | MemoryFile.NotifySource.nsSystem;
+            byte* firstByte = (byte*)fms.LinkAsPointer(0);
+            
             if ((mode == 0) || (mode == 1))
             {
-                // Test 1 - Save/Load Object to File
-                fms.SetSeriazable(new TESTCLASS((new Random()).Next(0, ushort.MaxValue), "test 1", true));
+                // Test 1 - Save/Load Object to File (Bin Serialize)
+                fms.SetSeriazable(new SampleClass4Serialize((new Random()).Next(0, ushort.MaxValue), "test 1", true));
                 fms.Save(MemoryFile.GetCurrentDir() + @"\file_test_1.bin");
-                TESTCLASS t1 = (TESTCLASS)fms.GetSeriazable();
-                Console.WriteLine("TEST 1 : TESTCLASS\r\n t1 = {0}\r\n", t1);
+                SampleClass4Serialize t1 = (SampleClass4Serialize)fms.GetSeriazable();
+                fms.SetNotifyUserEvent((byte)((new Random()).Next(1,255)));
+                Console.WriteLine("TEST 1 : TESTCLASS\r\n t1 = {0} - {1}\r\n", t1, fms.DataType);
 
-                // Test 2 - Save/Load Object to File
-                fms.SetSeriazable(new TESTCLASS((new Random()).Next(0, ushort.MaxValue), "test 2", true), typeof(TESTCLASS));
+                // Test 2 - Save/Load Object to File (Xml Serialize)
+                fms.SetSeriazable(new SampleClass4Serialize((new Random()).Next(0, ushort.MaxValue), "test 2", true), typeof(SampleClass4Serialize));
                 fms.Save(MemoryFile.GetCurrentDir() + @"\file_test_2.bin");
-                TESTCLASS t2 = (TESTCLASS)fms.GetSeriazable(typeof(TESTCLASS));
-                Console.WriteLine("TEST 2 : TESTCLASS\r\n t2 = {0}\r\n", t2);
+                SampleClass4Serialize t2 = (SampleClass4Serialize)fms.GetSeriazable(typeof(SampleClass4Serialize));
+                Console.WriteLine("TEST 2 : TESTCLASS\r\n t2 = {0} - {1}\r\n", t2, fms.DataType);
 
-                // Test 3 - Strings
-                fms.AsString = "Test MemFile Sample by milokz@gmail.com";
+                // Test 3 - Save/Load Structure to File (Marshal)
+                SampleClass4Marshal t3 = new SampleClass4Marshal(100, 200, "NoName", new string[] { "a", "b", "c" });
+                fms.Set<SampleClass4Marshal>(t3);
                 fms.Save(MemoryFile.GetCurrentDir() + @"\file_test_3.bin");
-                Console.WriteLine("TEST 3 : Strings\r\n {0}\r\n", fms.AsString);
+                SampleClass4Marshal t3r = fms.Get<SampleClass4Marshal>();
+                Console.WriteLine("TEST 3 : TESTSTRUCT\r\n t3 = {0} - {1}\r\n", t3r, fms.DataType);                
 
-                // Test 4 - Save/Load KeyValue Pairs to File 
+                // Test 4 - Strings
+                fms.AsString = "Test MemFile Sample by milokz@gmail.com";
+                fms.Save(MemoryFile.GetCurrentDir() + @"\file_test_4.bin");
+                Console.WriteLine("TEST 4 : Strings\r\n {0} - {1}\r\n", fms.AsString, fms.DataType);
+
+                // Test 5 - Save/Load KeyValue Pairs to File 
                 Random r = new Random();
 
                 List<KeyValuePair<string, string>> kvp = new List<KeyValuePair<string, string>>();
@@ -59,38 +66,19 @@ namespace MemFile
                 for (int i = 0; i < mx; i++)
                     kvp.Add(new KeyValuePair<string, string>(String.Format("test_{0}", r.Next(11, 99)), String.Format("{0}", r.Next(11111, 99999))));
                 fms.Keys = kvp;
-                fms.Save(MemoryFile.GetCurrentDir() + @"\file_test_4.bin");
+                fms.Save(MemoryFile.GetCurrentDir() + @"\file_test_5.bin");
 
             };
 
             List<KeyValuePair<string,string>> kvr = fms.Keys;
-            Console.WriteLine("TEST 4 : Keys");
+            Console.WriteLine("TEST 5 : Keys - {0}", fms.DataType);
             foreach (KeyValuePair<string, string> kv in kvr)
                 Console.WriteLine(" {0} = {1}", kv.Key, kv.Value);
-            Console.WriteLine();            
-
+            Console.WriteLine();
+           
             // End Tests
             Console.ReadLine();
             fms.Close();
         }        
-    }
-
-    [Serializable]
-    public class TESTCLASS
-    {
-        public int AAAA = -1;
-        public string BBBB = "";
-        public bool CCCC = false;
-        public DateTime DDDD = DateTime.MinValue;
-
-        public TESTCLASS() { }
-
-        public TESTCLASS(int a, string b, bool c) { this.AAAA = a; this.BBBB = b; this.CCCC = c; this.DDDD = DateTime.UtcNow; }
-
-        public override string ToString()
-        {
-            return String.Format("A = {0}, B = {1}, C = {2}, D = {3}", AAAA, BBBB, CCCC, DDDD);
-        }
-    }
-         
+    }    
 }
